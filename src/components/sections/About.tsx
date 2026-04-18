@@ -62,25 +62,27 @@ export function About() {
 
           <a
             href="#"
-            className="group w-fit border border-chrome-tertiary px-10 py-5 font-mono text-xs tracking-widest uppercase text-chrome-tertiary hover:bg-chrome-tertiary hover:text-background transition-all duration-300 flex items-center gap-4"
+            className="group w-fit border border-chrome-tertiary px-10 py-5 font-mono text-xs tracking-widest uppercase text-chrome-tertiary transition-all duration-300 flex items-center gap-4 btn-fill-left"
           >
-            {t(translations.about.download)}
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="transition-transform group-hover:translate-y-1"
-            >
-              <path
-                d="M7 1V10M7 10L11 6M7 10L3 6M1 13H13"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <span className="relative z-10 flex items-center gap-4">
+              {t(translations.about.download)}
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="transition-transform group-hover:translate-y-1"
+              >
+                <path
+                  d="M7 1V10M7 10L11 6M7 10L3 6M1 13H13"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
           </a>
         </div>
 

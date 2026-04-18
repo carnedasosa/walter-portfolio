@@ -135,7 +135,7 @@ export function Hero() {
           <div className="mt-10 flex items-center gap-8">
             <a
               href="#projects"
-              className="group border border-foreground px-8 py-4 font-mono text-xs tracking-widest uppercase flex items-center gap-3 hover:border-chrome-primary hover:text-chrome-primary transition-all relative overflow-hidden"
+              className="group border border-foreground px-8 py-4 font-mono text-xs tracking-widest uppercase flex items-center gap-3 transition-all relative overflow-hidden btn-fill-left"
             >
               <span className="relative z-10 flex items-center gap-3">
                 {t(translations.hero.cta)}

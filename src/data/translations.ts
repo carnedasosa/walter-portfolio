@@ -57,8 +57,8 @@ export const translations = {
   },
   about: {
     titleLines: [
-      { it: "Viaggio", en: "Journey" },
-      { it: "con la Mente", en: "with the Mind" },
+      { it: "Visione", en: "Vision" },
+      { it: "e Metodo", en: "and Method" },
     ],
     bio: {
       it: "Progetto oggetti che trasformano il modo in cui le persone interagiscono con lo spazio e il servizio. Il mio processo parte sempre da un'ossessione: industrializzare la qualità artigianale senza perdere l'anima del prodotto.",
