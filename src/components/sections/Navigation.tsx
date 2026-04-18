@@ -191,7 +191,7 @@ export function Navigation() {
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-menu"
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            className="md:hidden text-foreground p-2 relative z-[110] focus-visible:outline-white"
+            className="md:hidden text-foreground p-2 relative z-[110] focus:outline-none focus:ring-0 active:scale-95 transition-transform"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             <div className="flex flex-col gap-[5px] w-6 h-4 justify-center items-center">
