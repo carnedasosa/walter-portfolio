@@ -51,7 +51,7 @@ export function WallOfBrands() {
         </div>
 
         {/* Brand Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 bg-border gap-px border-y border-border">
+        <div className="relative grid grid-cols-2 md:grid-cols-3 bg-border gap-px border-y border-border">
           {brands.map((brand, i) => (
             <motion.div
               key={i}

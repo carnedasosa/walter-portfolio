@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
 import "./globals.css";
 
+import { ClientSideProviders } from "@/components/providers/ClientSideProviders";
+
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
@@ -21,8 +23,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#0a0a0a",
+  themeColor: "#050505",
   colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -36,7 +40,9 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${spaceMono.variable} antialiased selection:bg-accent/30 selection:text-foreground`}
     >
       <body className="noise">
-        {children}
+        <ClientSideProviders>
+          {children}
+        </ClientSideProviders>
       </body>
     </html>
   );

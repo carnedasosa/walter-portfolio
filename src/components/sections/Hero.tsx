@@ -35,7 +35,7 @@ export function Hero() {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.16, 1, 0.3, 1], // Apple-style ease
+        ease: [0.16, 1, 0.3, 1] as any, // Apple-style ease
       },
     },
   };
@@ -46,7 +46,7 @@ export function Hero() {
       y: 0,
       transition: {
         duration: 1.2,
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.16, 1, 0.3, 1] as any,
       },
     },
   };
@@ -90,7 +90,7 @@ export function Hero() {
           className="flex items-center gap-4 mb-6"
         >
           <div className="h-px w-10 bg-chrome-primary"></div>
-          <div className="font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase text-chrome-primary">
+          <div className="font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase text-chrome-primary relative">
             <AnimatePresence mode="wait">
               <motion.span
                 key={index}

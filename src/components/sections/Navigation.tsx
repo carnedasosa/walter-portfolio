@@ -44,7 +44,7 @@ export function Navigation() {
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as any, delay: 0.1 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? "border-b border-border bg-background/80 backdrop-blur-xl py-4"
           : "bg-transparent py-6"
@@ -108,7 +108,7 @@ export function Navigation() {
       </motion.nav>
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {mounted && isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}

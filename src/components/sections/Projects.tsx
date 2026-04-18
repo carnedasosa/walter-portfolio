@@ -45,7 +45,7 @@ export function Projects() {
               initial={{ y: "100%" }}
               whileInView={{ y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
               className="block"
             >
               {t(translations.projects.title)}
@@ -58,7 +58,7 @@ export function Projects() {
       </motion.div>
 
       {/* Project List */}
-      <div className="flex flex-col">
+      <div className="relative flex flex-col">
         {projects.map((project, index) => (
           <ProjectCard key={project.id} project={project} index={index} />
         ))}
