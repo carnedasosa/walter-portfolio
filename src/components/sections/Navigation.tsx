@@ -1,16 +1,18 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { X } from "lucide-react";
 
 export function Navigation() {
   const { lang, setLang, t } = useLanguage();
   const [mounted, setMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -19,16 +21,52 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock scroll when mobile menu is open
+  // Lock scroll and handle focus trapping when mobile menu is open
   useEffect(() => {
     if (!mounted) return;
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMobileMenuOpen(false);
+    };
+
+    const handleFocusTrap = (e: KeyboardEvent) => {
+      if (!isMobileMenuOpen || !menuRef.current) return;
+      
+      const focusableElements = menuRef.current.querySelectorAll(
+        'a[href], button:not([disabled]), textarea, input, select'
+      );
+      const firstElement = focusableElements[0] as HTMLElement;
+      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+      if (e.key === "Tab") {
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    };
+
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleEscape);
+      window.addEventListener("keydown", handleFocusTrap);
     } else {
       document.body.style.overflow = "unset";
+      // Return focus to toggle button when closed
+      if (mounted) toggleRef.current?.focus();
     }
+
     return () => {
       document.body.style.overflow = "unset";
+      window.removeEventListener("keydown", handleEscape);
+      window.removeEventListener("keydown", handleFocusTrap);
     };
   }, [isMobileMenuOpen, mounted]);
 
@@ -39,31 +77,85 @@ export function Navigation() {
     { href: "#contact", label: t(translations.nav.contact) },
   ];
 
+  // Animation Variants
+  const containerVariants = {
+    open: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    },
+    closed: {
+      opacity: 0,
+      transition: {
+        staggerChildren: 0.05,
+        staggerDirection: -1
+      }
+    }
+  };
+
+  const itemVariants = {
+    open: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    },
+    closed: {
+      y: 40,
+      opacity: 0,
+      transition: {
+        duration: 0.4
+      }
+    }
+  };
+
+  const burgerLine1 = {
+    closed: { rotate: 0, y: 0 },
+    open: { rotate: 45, y: 6 }
+  };
+  const burgerLine2 = {
+    closed: { opacity: 1, x: 0 },
+    open: { opacity: 0, x: 10 }
+  };
+  const burgerLine3 = {
+    closed: { rotate: 0, y: 0 },
+    open: { rotate: -45, y: -6 }
+  };
+
   return (
     <>
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as any, delay: 0.1 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+        aria-label="Main Navigation"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
           ? "border-b border-border bg-background/80 backdrop-blur-xl py-4"
-          : "bg-transparent py-6"
+          : "bg-transparent py-8"
           }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex justify-between items-center">
           {/* Logo */}
-          <a href="#" className="font-mono text-xs font-bold tracking-[0.2em] uppercase">
+          <a 
+            href="#" 
+            className="font-mono text-xs font-bold tracking-[0.2em] uppercase focus-visible:outline-white"
+            aria-label="Walter Ianieri Home"
+          >
             WALTER <span className="text-chrome-primary">IANIERI</span>
           </a>
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-12">
-            <div className="flex gap-8">
+            <div className="flex gap-8" role="list">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="group relative px-3 py-1 font-mono text-xs tracking-widest uppercase text-muted-foreground transition-all duration-300"
+                  className="group relative px-3 py-1 font-mono text-xs tracking-widest uppercase text-muted-foreground transition-all duration-300 focus-visible:outline-white"
                 >
                   <span className="relative z-10 group-hover:text-foreground transition-colors">
                     {link.label}
@@ -77,14 +169,16 @@ export function Navigation() {
             <div className="flex items-center gap-2 font-mono text-xs">
               <button
                 onClick={() => setLang("it")}
-                className={`${lang === "it" ? "text-foreground" : "text-muted-foreground"} hover:text-foreground transition-colors`}
+                className={`${lang === "it" ? "text-foreground" : "text-muted-foreground"} hover:text-foreground transition-colors focus-visible:outline-none`}
+                aria-label="Switch to Italian"
               >
                 IT
               </button>
               <span className="text-border">/</span>
               <button
                 onClick={() => setLang("en")}
-                className={`${lang === "en" ? "text-foreground" : "text-muted-foreground"} hover:text-foreground transition-colors`}
+                className={`${lang === "en" ? "text-foreground" : "text-muted-foreground"} hover:text-foreground transition-colors focus-visible:outline-none`}
+                aria-label="Switch to English"
               >
                 EN
               </button>
@@ -93,51 +187,80 @@ export function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-foreground p-2"
+            ref={toggleRef}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            className="md:hidden text-foreground p-2 relative z-[110] focus-visible:outline-white"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <div className="flex flex-col gap-[5px]">
-              <div className="h-px w-6 bg-foreground"></div>
-              <div className="h-px w-6 bg-foreground"></div>
-              <div className="h-px w-6 bg-foreground"></div>
-            </div>}
+            <div className="flex flex-col gap-[5px] w-6 h-4 justify-center items-center">
+              <motion.div
+                variants={burgerLine1}
+                animate={isMobileMenuOpen ? "open" : "closed"}
+                className="h-px w-6 bg-foreground origin-center"
+              />
+              <motion.div
+                variants={burgerLine2}
+                animate={isMobileMenuOpen ? "open" : "closed"}
+                className="h-px w-6 bg-foreground"
+              />
+              <motion.div
+                variants={burgerLine3}
+                animate={isMobileMenuOpen ? "open" : "closed"}
+                className="h-px w-6 bg-foreground origin-center"
+              />
+            </div>
           </button>
         </div>
-
-
       </motion.nav>
+
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {mounted && isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 bg-background z-[100] px-10 pt-32 flex flex-col justify-between pb-12"
+            ref={menuRef}
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile Navigation Menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="fixed inset-0 bg-background/95 backdrop-blur-2xl z-[100] px-10 flex flex-col justify-between pb-12 overflow-y-auto"
+            style={{ 
+              paddingTop: "max(8rem, env(safe-area-inset-top, 8rem))",
+              paddingBottom: "max(3rem, env(safe-area-inset-bottom, 3rem))" 
+            }}
           >
-            <button
-              className="absolute top-8 right-6 p-2"
-              onClick={() => setIsMobileMenuOpen(false)}
+            <motion.div 
+              variants={containerVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="flex flex-col gap-8"
             >
-              <X size={32} />
-            </button>
-
-            <div className="flex flex-col gap-8">
               {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="font-sans text-4xl font-bold hover:text-chrome-primary transition-colors"
-                >
-                  {link.label}
-                </a>
+                <motion.div key={link.href} variants={itemVariants}>
+                  <a
+                    href={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="font-sans text-5xl font-bold hover:text-chrome-primary transition-colors block border-b border-border/50 pb-4"
+                  >
+                    {link.label}
+                  </a>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            <div className="border-t border-border pt-8 flex flex-col gap-4">
-              <div className="flex gap-4 font-mono text-xs">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="border-t border-border pt-8 flex flex-col gap-6"
+            >
+              <div className="flex gap-6 font-mono text-xs tracking-widest">
                 <button
                   onClick={() => { setLang("it"); setIsMobileMenuOpen(false); }}
                   className={lang === "it" ? "text-foreground" : "text-muted-foreground"}
@@ -151,10 +274,13 @@ export function Navigation() {
                   ENGLISH
                 </button>
               </div>
-              <a href="mailto:walter@walterianieri.com" className="font-mono text-xs text-muted-foreground">
-                walter@walterianieri.com
-              </a>
-            </div>
+              <div className="flex flex-col gap-2">
+                <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Inquiries</span>
+                <a href="mailto:walter@walterianieri.com" className="font-mono text-sm text-foreground hover:text-chrome-primary transition-colors">
+                  walter@walterianieri.com
+                </a>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

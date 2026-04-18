@@ -54,11 +54,11 @@ export function Hero() {
   return (
     <section className="relative min-h-screen hero-grid px-6 pt-28 pb-12 md:px-10 flex flex-col justify-between overflow-hidden">
       {/* Accent Glow Orb */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.05 }}
         transition={{ duration: 2 }}
-        className="absolute top-[-128px] right-[-128px] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(226,232,240,0.5)_0%,transparent_70%)] pointer-events-none" 
+        className="absolute top-[-128px] right-[-128px] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(226,232,240,0.5)_0%,transparent_70%)] pointer-events-none"
       />
 
       {/* Top Meta Row */}
@@ -79,7 +79,7 @@ export function Hero() {
       </motion.div>
 
       {/* Main Content */}
-      <motion.div 
+      <motion.div
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -105,7 +105,7 @@ export function Hero() {
           </div>
         </motion.div>
 
-        <motion.h1 
+        <motion.h1
           variants={{
             visible: {
               transition: {
@@ -121,7 +121,7 @@ export function Hero() {
             </motion.div>
           </div>
           <div className="overflow-hidden">
-            <motion.div variants={lineVariants} className="text-chrome-primary glow-chrome">
+            <motion.div variants={lineVariants} className="text-chrome-primary glow-chrome pb-5">
               {t(translations.hero.headlineLines[1])}
             </motion.div>
           </div>
@@ -165,7 +165,7 @@ export function Hero() {
       </motion.div>
 
       {/* Bottom Row */}
-      <motion.div 
+      <motion.div
         initial="hidden"
         animate="visible"
         variants={containerVariants}
