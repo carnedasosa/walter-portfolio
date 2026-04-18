@@ -5,6 +5,9 @@ import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
 import { projects } from "@/data/projects";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
+
+const MotionImage = motion.create(Image);
 
 export function Projects() {
   const { t } = useLanguage();
@@ -122,14 +125,15 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
            whileHover={{ scale: 1.05 }}
            transition={{ duration: 0.7 }}
          >
-           <motion.img
+           <MotionImage
              src={project.image}
              alt={project.title}
+             fill
+             sizes="(max-width: 768px) 100vw, 50vw"
              style={{ 
                y: imageY, 
                scale: 1.1,
-               objectPosition: (project as any).imagePosition || "center",
-               objectFit: (project as any).objectFit || "cover"
+               objectPosition: (project as any).imagePosition || "center"
              }}
              className="w-full h-full object-cover grayscale-[50%] group-hover:grayscale-0 transition-all duration-700"
            />

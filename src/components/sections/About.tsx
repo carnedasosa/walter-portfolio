@@ -4,6 +4,7 @@ import React from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export function About() {
   const { t } = useLanguage();
@@ -89,10 +90,12 @@ export function About() {
         {/* Right Column: Portrait & Stats */}
         <div className="relative group">
           <div className="aspect-[3/4] overflow-hidden border border-border relative">
-            <img
+            <Image
               src="/assets/about/walter-front.png"
               alt="Walter Ianieri"
-              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
             />
             {/* Corner Accents */}
             <div className="absolute top-0 right-0 w-16 h-16 border-t border-r border-chrome-tertiary" />
