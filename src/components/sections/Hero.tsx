@@ -23,7 +23,12 @@ export function Hero() {
       <div className="absolute top-[-128px] right-[-128px] w-[600px] height-[600px] rounded-full opacity-5 bg-[radial-gradient(circle,rgba(226,232,240,0.5)_0%,transparent_70%)] pointer-events-none" />
 
       {/* Top Meta Row */}
-      <div className="flex justify-between mb-3 font-mono text-[10px] md:text-xs tracking-widest uppercase text-muted-foreground z-10">
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="flex justify-between mb-3 font-mono text-[10px] md:text-xs tracking-widest uppercase text-muted-foreground z-10"
+      >
         <div className="flex gap-4">
           <span>{t(translations.hero.year)}</span>
           <span className="text-border">|</span>
@@ -32,11 +37,16 @@ export function Hero() {
         <div className="hidden md:block">
           <span>{t(translations.hero.role)}</span>
         </div>
-      </div>
+      </motion.div>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col justify-center z-10">
-        <div className="flex items-center gap-4 mb-6">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="flex items-center gap-4 mb-6"
+        >
           <div className="h-px w-10 bg-chrome-primary"></div>
           <div className="font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase text-chrome-primary">
             <AnimatePresence mode="wait">
@@ -51,7 +61,7 @@ export function Hero() {
               </motion.span>
             </AnimatePresence>
           </div>
-        </div>
+        </motion.div>
 
         <h1 className="font-sans text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black leading-none tracking-tight">
           {t(translations.hero.headlineLines[0])}
