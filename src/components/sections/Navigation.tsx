@@ -101,7 +101,7 @@ export function Navigation() {
       opacity: 1,
       transition: {
         duration: 0.6,
-        ease: [0.16, 1, 0.3, 1]
+        ease: [0.16, 1, 0.3, 1] as any
       }
     },
     closed: {
@@ -131,7 +131,7 @@ export function Navigation() {
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any, delay: 0.1 }}
         aria-label="Main Navigation"
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
           ? "border-b border-border bg-background/80 backdrop-blur-xl py-4"
