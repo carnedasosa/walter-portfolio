@@ -53,6 +53,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  position: relative;
 }
 
 @media (hover: hover) {

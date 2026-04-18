@@ -8,10 +8,12 @@ import { Menu, X } from "lucide-react";
 
 export function Navigation() {
   const { lang, setLang, t } = useLanguage();
+  const [mounted, setMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => setIsScrolled(window.scrollY > 60);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -19,6 +21,7 @@ export function Navigation() {
 
   // Lock scroll when mobile menu is open
   useEffect(() => {
+    if (!mounted) return;
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -27,7 +30,7 @@ export function Navigation() {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, mounted]);
 
   const navLinks = [
     { href: "#projects", label: t(translations.nav.work) },
@@ -101,58 +104,7 @@ export function Navigation() {
           </button>
         </div>
 
-        {/* Mobile Menu Overlay */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, x: "100%" }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed inset-0 bg-background z-50 px-10 pt-32 flex flex-col justify-between pb-12"
-            >
-              <button
-                className="absolute top-8 right-6 p-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <X size={32} />
-              </button>
 
-              <div className="flex flex-col gap-8">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="font-sans text-4xl font-bold hover:text-chrome-primary transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-
-              <div className="border-t border-border pt-8 flex flex-col gap-4">
-                <div className="flex gap-4 font-mono text-xs">
-                  <button
-                    onClick={() => { setLang("it"); setIsMobileMenuOpen(false); }}
-                    className={lang === "it" ? "text-foreground" : "text-muted-foreground"}
-                  >
-                    ITALIANO
-                  </button>
-                  <button
-                    onClick={() => { setLang("en"); setIsMobileMenuOpen(false); }}
-                    className={lang === "en" ? "text-foreground" : "text-muted-foreground"}
-                  >
-                    ENGLISH
-                  </button>
-                </div>
-                <a href="mailto:walter@walterianieri.com" className="font-mono text-xs text-muted-foreground">
-                  walter@walterianieri.com
-                </a>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.nav>
       {/* Mobile Menu Overlay */}
       <AnimatePresence>

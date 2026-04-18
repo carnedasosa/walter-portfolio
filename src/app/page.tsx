@@ -17,7 +17,7 @@ const CustomCursor = dynamic(() => import("@/components/ui/CustomCursor").then(m
 export default function Home() {
   return (
     <LanguageProvider>
-      <main className="min-h-screen bg-background text-foreground selection:bg-accent/30 selection:text-foreground">
+      <main className="relative min-h-screen bg-background text-foreground selection:bg-accent/30 selection:text-foreground">
         <CustomCursor />
         <Navigation />
         <Hero />
