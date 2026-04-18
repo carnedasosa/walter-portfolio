@@ -58,9 +58,12 @@ export function Navigation() {
               <a
                 key={link.href}
                 href={link.href}
-                className="font-mono text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors"
+                className="group relative px-3 py-1 font-mono text-xs tracking-widest uppercase text-muted-foreground transition-all duration-300"
               >
-                {link.label}
+                <span className="relative z-10 group-hover:text-foreground transition-colors">
+                  {link.label}
+                </span>
+                <span className="absolute inset-0 bg-white/5 backdrop-blur-md opacity-0 group-hover:opacity-100 border border-white/10 rounded-sm transition-all duration-300 -z-0" />
               </a>
             ))}
           </div>
