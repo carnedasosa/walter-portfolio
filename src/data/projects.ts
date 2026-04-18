@@ -78,6 +78,8 @@ export const projects = [
       en: "Interior architecture blending industrial minimalism and high-level nautical comfort.",
     },
     image: "/assets/projects/seven-design.png",
+    imagePosition: "bottom",
+    aspectRatio: "aspect-square",
     highlight: {
       it: "Comfort nautico industrializzato.",
       en: "Industrialized nautical comfort.",

@@ -30,16 +30,16 @@ export function Projects() {
       </div>
 
       {/* Project List */}
-      <div className="flex flex-col gap-32 md:gap-48">
+      <div className="flex flex-col">
         {projects.map((project, index) => (
           <div
             key={project.id}
             className={`flex flex-col ${
               index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-            } gap-12 md:gap-24 items-center`}
+            } gap-12 md:gap-24 items-center border-b border-border/30 pb-24 md:pb-32 mb-24 md:mb-32 last:border-0 last:pb-0 last:mb-0`}
           >
             {/* Image Side */}
-            <div className="w-full md:w-1/2 group relative overflow-hidden aspect-[4/3] bg-card border border-border">
+            <div className={`w-full md:w-1/2 group relative overflow-hidden ${(project as any).aspectRatio || "aspect-[4/3]"} bg-card border border-border`}>
                <motion.div 
                  className="w-full h-full"
                  whileHover={{ scale: 1.05 }}
@@ -49,6 +49,10 @@ export function Projects() {
                    src={project.image}
                    alt={project.title}
                    className="w-full h-full object-cover grayscale-[50%] group-hover:grayscale-0 transition-all duration-700"
+                   style={{ 
+                     objectPosition: (project as any).imagePosition || "center",
+                     objectFit: (project as any).objectFit || "cover"
+                   }}
                  />
                </motion.div>
                

@@ -23,7 +23,7 @@ export function Hero() {
       <div className="absolute top-[-128px] right-[-128px] w-[600px] height-[600px] rounded-full opacity-5 bg-[radial-gradient(circle,rgba(226,232,240,0.5)_0%,transparent_70%)] pointer-events-none" />
 
       {/* Top Meta Row */}
-      <div className="flex justify-between font-mono text-[10px] md:text-xs tracking-widest uppercase text-muted-foreground z-10">
+      <div className="flex justify-between mb-3 font-mono text-[10px] md:text-xs tracking-widest uppercase text-muted-foreground z-10">
         <div className="flex gap-4">
           <span>{t(translations.hero.year)}</span>
           <span className="text-border">|</span>
@@ -101,11 +101,11 @@ export function Hero() {
         {/* Scroll Indicator */}
         <div className="flex flex-col items-center gap-4">
           <div className="relative h-12 w-px bg-border overflow-hidden">
-             <motion.div 
-               className="absolute top-0 left-0 w-full bg-chrome-primary origin-top"
-               animate={{ height: ["0%", "100%", "0%"] }}
-               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-             />
+            <motion.div
+              className="absolute top-0 left-0 w-full bg-chrome-primary origin-top"
+              animate={{ height: ["0%", "100%", "0%"] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            />
           </div>
 
           <span className="font-mono text-[10px] uppercase tracking-widest" style={{ writingMode: 'vertical-rl' }}>

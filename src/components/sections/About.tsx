@@ -88,7 +88,7 @@ export function About() {
         <div className="relative group">
           <div className="aspect-[3/4] overflow-hidden border border-border relative">
             <img
-              src="/assets/about/walter.jpg"
+              src="/assets/about/walter-front.png"
               alt="Walter Ianieri"
               className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
             />
