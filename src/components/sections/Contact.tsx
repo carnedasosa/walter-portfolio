@@ -101,44 +101,50 @@ export function Contact() {
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-6"
               >
-                <div className="flex flex-col gap-2">
-                  <label className="font-mono text-[10px] tracking-widest uppercase text-muted-foreground">
+                <label htmlFor="name" className="flex flex-col gap-2 group">
+                  <span className="font-mono text-[10px] tracking-widest uppercase text-muted-foreground group-focus-within:text-chrome-primary transition-colors">
                     {t(translations.contact.form.name)}
-                  </label>
+                  </span>
                   <input
+                    id="name"
                     type="text"
                     name="name"
+                    autoComplete="name"
                     required
                     placeholder="John Doe"
                     className="border border-border bg-transparent px-6 py-4 font-sans text-sm focus:border-chrome-primary focus:outline-none transition-colors duration-300 placeholder:text-muted-foreground/30"
                   />
-                </div>
+                </label>
 
-                <div className="flex flex-col gap-2">
-                  <label className="font-mono text-[10px] tracking-widest uppercase text-muted-foreground">
+                <label htmlFor="email" className="flex flex-col gap-2 group">
+                  <span className="font-mono text-[10px] tracking-widest uppercase text-muted-foreground group-focus-within:text-chrome-primary transition-colors">
                     {t(translations.contact.form.email)}
-                  </label>
+                  </span>
                   <input
+                    id="email"
                     type="email"
                     name="email"
+                    autoComplete="email"
                     required
                     placeholder="john@example.com"
                     className="border border-border bg-transparent px-6 py-4 font-sans text-sm focus:border-chrome-primary focus:outline-none transition-colors duration-300 placeholder:text-muted-foreground/30"
                   />
-                </div>
+                </label>
 
-                <div className="flex flex-col gap-2">
-                  <label className="font-mono text-[10px] tracking-widest uppercase text-muted-foreground">
+                <label htmlFor="message" className="flex flex-col gap-2 group">
+                  <span className="font-mono text-[10px] tracking-widest uppercase text-muted-foreground group-focus-within:text-chrome-primary transition-colors">
                     {t(translations.contact.form.message)}
-                  </label>
+                  </span>
                   <textarea
+                    id="message"
                     name="message"
+                    autoComplete="off"
                     required
                     rows={5}
                     placeholder="..."
                     className="border border-border bg-transparent px-6 py-4 font-sans text-sm focus:border-chrome-primary focus:outline-none transition-colors duration-300 resize-none placeholder:text-muted-foreground/30"
                   />
-                </div>
+                </label>
 
                 <button
                   type="submit"
