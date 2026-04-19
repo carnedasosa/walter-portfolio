@@ -9,11 +9,34 @@ export function Contact() {
   const { t } = useLanguage();
   const [formState, setFormState] = useState<"idle" | "loading" | "success">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormState("loading");
-    // Simulate API call
-    setTimeout(() => setFormState("success"), 1500);
+    
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setFormState("success");
+      } else {
+        setFormState("idle");
+        alert("Errore durante l'invio del messaggio.");
+      }
+    } catch (err) {
+      setFormState("idle");
+      alert("Errore di rete.");
+    }
   };
 
   return (
@@ -84,6 +107,7 @@ export function Contact() {
                   </label>
                   <input
                     type="text"
+                    name="name"
                     required
                     placeholder="John Doe"
                     className="border border-border bg-transparent px-6 py-4 font-sans text-sm focus:border-chrome-primary focus:outline-none transition-colors duration-300 placeholder:text-muted-foreground/30"
@@ -96,6 +120,7 @@ export function Contact() {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     required
                     placeholder="john@example.com"
                     className="border border-border bg-transparent px-6 py-4 font-sans text-sm focus:border-chrome-primary focus:outline-none transition-colors duration-300 placeholder:text-muted-foreground/30"
@@ -107,6 +132,7 @@ export function Contact() {
                     {t(translations.contact.form.message)}
                   </label>
                   <textarea
+                    name="message"
                     required
                     rows={5}
                     placeholder="..."
